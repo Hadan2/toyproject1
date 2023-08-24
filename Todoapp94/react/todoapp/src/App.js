@@ -5,6 +5,9 @@ import {Button, Container, Nav, Navbar} from 'react-bootstrap'
 import { BrowserRouter, Link, Route, Routes, useNavigate } from 'react-router-dom';
 
 import Home from './pages/Home'
+import Login from './pages/Login'
+
+
 
 function App() {
   const navigate = useNavigate();
@@ -13,13 +16,16 @@ function App() {
    
     <Routes>
       <Route path="/home" element={<Home></Home>} />
-      <Route path="/home1" element={<div>fc</div>} />
+      <Route path="/" element={<Login></Login>} />
     </Routes>
-    
-    123
-    <button onClick={() => {navigate('/home')}}>Home</button>
+  
 
+
+     
+     
     </div>
+
+    
     
   );
 }
