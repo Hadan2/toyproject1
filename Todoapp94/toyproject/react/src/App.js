@@ -6,6 +6,7 @@ import { BrowserRouter, Link, Route, Routes, useNavigate } from 'react-router-do
 
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Add from './pages/Add'
 
 
 
@@ -19,6 +20,7 @@ function App() {
     <Routes>
       <Route path="/home" element={<Home></Home>} />
       <Route path="/" element={<Login></Login>} />
+      <Route path="/add" element={<Add></Add>} />
     </Routes>
 
   

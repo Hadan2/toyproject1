@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Container, Nav, Navbar,Row,Col} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 
-function Home() {
+function Add() {
     const navigate = useNavigate();
     return (
         <div>
@@ -28,9 +28,34 @@ function Home() {
                     </Row>
                 </Container>
             </Navbar>
+
+            <Container>
+                <div className="sqaure">
+
+                    <div className="textst" style={{ marginTop: 20 }}> Title </div>
+                        <input
+                            className="input-field"
+                            onChange={(e) => {}}
+                            placeholder="아이디"
+                            type="text"
+                        />
+
+                    <div className="textst" style={{ marginTop: 20 }}>Content</div>
+                        <textarea
+                            className="textarea-field"
+                            onChange={(e) => {}}
+                            placeholder="긴 문단을 입력하세요"
+                        ></textarea>
+                </div>
+                
+
+            </Container>
+
+
+
            
         </div>
     )
 }
 
-export default Home;
+export default Add;

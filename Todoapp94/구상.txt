@@ -26,3 +26,14 @@ b. DB 설계
 c. 코드 구상하기
 d. 코드 짜기
 
+c. api
+1. /login : 로그인/회원가입 페이지
+2. /home: todolist 메인 페이지, 각 todolist 의 title 만 보이게, 추가/삭제 버튼
+3. /todolist/? : 각 todo 항목의 content를 보여줌
+4. /add : todolist 추가
+
+
+404페이지
+콘솔 주석처리
+api 구상
+db 그림으로 구상

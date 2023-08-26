@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from "react";
 import '../App.css';
 import {Button, Container, Nav, Navbar} from 'react-bootstrap'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
@@ -9,11 +10,11 @@ function Login() {
     let [id, setId] = useState("");
     let [pwd, setPwd] = useState("");
 
-    
+    const navigate = useNavigate();
 
     return (
         <div className="background">
-            <div style={{ fontFamily : "Oswald", fontSize: '100px', color: 'black' }} className="center"> Welcome!</div> 
+            <div style={{ fontFamily : "Oswald", fontSize: '100px', color: 'black', textAlign : "center" }} > Welcome!</div> 
 
             <div style={{textAlign : "center"}}>
             <button className="login-button" onClick={ () => {
@@ -37,6 +38,9 @@ function Login() {
 }
 
 function Modal(props){
+
+  const navigate = useNavigate();
+
     return (
         <div>
             
@@ -64,21 +68,21 @@ function Modal(props){
           
 
           <button onClick={() => {
-            console.log(props.id)
-            console.log(props.pwd)
+            //console.log(props.id)
+            //console.log(props.pwd)
             axios.post('http://localhost:8080/data', {
                 id : props.id,
                 pwd : props.pwd
             })
             .then(response => {
-                // 요청이 성공했을 때 실행됩니다.
-                console.log('요청이 성공했습니다.');
-                console.log('서버 응답 데이터:', response.data);
+                /* console.log('요청이 성공했습니다.');
+                console.log('서버 응답 데이터:', response.data); */
+                navigate('/home')
+
               })
               .catch(error => {
-                // 요청이 실패했을 때 실행됩니다.
-                console.error('요청이 실패했습니다.');
-                console.error('오류:', error);
+                /* console.error('요청이 실패했습니다.');
+                console.error('오류:', error); */
               });
           }}> 회원가입 </button>
 
