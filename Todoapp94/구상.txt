@@ -1,39 +1,43 @@
 구현해야 하는 기능
-1. todo 조회
-2. todo 추가
-3. todo 삭제
-4. todo 완료
-5. 로그인/회원가입
-6. 예외처리
-7. 관리자 역할 부여
-8. 작성자가 로그인한 아이디인 글 목록 조회
+1. todo 조회 (완료)
+2. todo 추가 (완료)
+3. todo 삭제 (완료)
+4. todo 완료 (미완료)
+5. 로그인/회원가입 (로그인 미완료)
+6. 예외처리 (미완료)
+7. 관리자 역할 부여 (미완료)
+8. 작성자가 로그인한 아이디인 글 목록 조회 (미완료)
 
 a. 기능구상
 
-- 제일 처음에는 로그인 or 회원가입 버튼이 있는 페이지
+- login 페이지
+제일 처음 화면, 로그인 or 회원가입 버튼이 있는 페이지
 
-- main 화면 
-상단 바에 home, todo list
-중앙에는 작성한 todo list
+- home 페이지
+상단 바에 home, add
+중앙에는 작성한 todo list, 각 todolist 의 title 과 date 보이게, complete/detail/delete 버튼
+오른쪽에는 완료한 todo list
 
-- todolist 페이지
-상단 바에 todolist 추가
-중앙에는 todolist, todolist 에 삭제, 완료 버튼
+- add 페이지
+title, date, content 를 입력할 수 있도록
+
+-mypage 
+자신이 쓴 todolist 만 보이게
 
 b. DB 설계
-- todo list : writer, date, title, content
+- info : id, pwd
+- todolist : title, date, content
 
 c. 코드 구상하기
 d. 코드 짜기
 
 c. api
 1. /login : 로그인/회원가입 페이지
-2. /home: todolist 메인 페이지, 각 todolist 의 title 만 보이게, 추가/삭제 버튼
-3. /todolist/? : 각 todo 항목의 content를 보여줌
+2. /home: todolist 메인 페이지
+3. /home/? : 각 todo 항목의 content
 4. /add : todolist 추가
+5. /mypage
 
 
-404페이지
+404페이지(미완료)
 콘솔 주석처리
-api 구상
-db 그림으로 구상
