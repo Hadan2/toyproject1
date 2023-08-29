@@ -1,6 +1,6 @@
 import React, { useState, useEffect }from "react";
 import {Button, Container, Nav, Navbar,Row,Col} from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Home() {
@@ -61,11 +61,13 @@ function Home() {
                     return (
                         <Container key={a._id}>
                             <div className="small-square" >
-                                <div className="top-left textst">{a.date}</div>
-                                <div className="bottom-left textst">{a.title}</div>
-                                <Button className="bottom-right-detail" variant="success"> Detail </Button>
-                                <Button className="bottom-right-delete" variant="danger" 
+                                <div className="top-left textst" onClick={() => {
+                                    navigate('/')
+                                }}>{a.date}</div>
+                                
+                                <Link to='/' className="bottom-left textst">{a.title}</Link>
 
+                                <Button className="bottom-right-delete" variant="danger" 
                                 onClick={(e) => {
                                     console.log(a.title)
                                     axios.delete('http://localhost:8080/data2',{
