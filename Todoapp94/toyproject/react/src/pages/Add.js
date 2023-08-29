@@ -10,6 +10,7 @@ function Add() {
     let [date, setDate] = useState("");
     let [content, setContent] = useState("");
 
+
     return (
         <div>
             <Navbar>
@@ -68,6 +69,7 @@ function Add() {
 
                         <Button className="add-button" style={{marginTop:20, color: "Dark"}} 
                         onClick={() => {
+                            
                             axios.post('http://localhost:8080/data2', {
                                 title : title,
                                 content : content,

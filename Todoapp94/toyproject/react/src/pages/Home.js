@@ -1,27 +1,24 @@
 import React, { useState, useEffect }from "react";
 import {Button, Container, Nav, Navbar,Row,Col} from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Home() {
+function Home(props) {
     const navigate = useNavigate();
-    const [data1, setData1] = useState([]);
-
-
-
-      useEffect(() => {
+    const params = useParams();
+    
+    useEffect(() => {
         axios.get('http://localhost:8080/data2') 
           .then(res => {
             let copy = [...res.data]
-            setData1(copy);
-            console.log(res.data); 
+            props.setData1(copy);
+            console.log(props.data1); 
           })
           .catch(err => {
             console.error(err);
           });
-      }, []); 
-      
-   
+      }, []);
+
 
     return (
         <div>
@@ -56,7 +53,7 @@ function Home() {
             </Navbar>
 
             {
-                data1.map((a,i) => {
+                props.data1.map((a,i) => {
                     
                     return (
                         <Container key={a._id}>
@@ -65,7 +62,7 @@ function Home() {
                                     navigate('/')
                                 }}>{a.date}</div>
                                 
-                                <Link to='/' className="bottom-left textst">{a.title}</Link>
+                                <Link to={`/${a.title}`} className="bottom-left textst">{a.title}</Link>
 
                                 <Button className="bottom-right-delete" variant="danger" 
                                 onClick={(e) => {

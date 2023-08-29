@@ -27,15 +27,8 @@ MongoClient.connect('mongodb+srv://Hadan2:fortis192@hadan2.gh0cdrh.mongodb.net/?
         
 })
 
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '/react/build/index.html'));
-});
 
-app.get('/data', (req,res) => {
-  res.send("data입니다");
-});
-
-app.post('/data', (req,res) => {
+app.post('/info', (req,res) => {
   console.log(req.body)
   db.collection('info').insertOne( {id: req.body.id, pwd: req.body.pwd} , (err, result) => {
     /* console.log('success99')  */
@@ -60,7 +53,7 @@ app.get('/data2', (req,res) => {
     if (err) {
       console.error(err);
     } else {
-      res.json(result); // 클라이언트에게 JSON 형식의 데이터를 반환
+      res.json(result); 
     }
     });
 })

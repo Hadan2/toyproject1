@@ -70,7 +70,7 @@ function Modal(props){
           <button onClick={() => {
             //console.log(props.id)
             //console.log(props.pwd)
-            axios.post('http://localhost:8080/data', {
+            axios.post('http://localhost:8080/info', {
                 id : props.id,
                 pwd : props.pwd
             })
