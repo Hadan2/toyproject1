@@ -42,7 +42,7 @@ function Home(props) {
                                 <Button className="bottom-right-delete" variant="danger" 
                                 onClick={(e) => {
                                     console.log(a.title)
-                                    axios.delete('http://localhost:8080/data2',{
+                                    axios.delete(`http://localhost:8080/delete/${a._id}`,{
                                         data : {
                                             title : a.title
                                         }

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const { ObjectId } = require('mongodb');
 
 app.use(express.json());
 var cors = require('cors');
@@ -58,7 +59,7 @@ app.get('/data2', (req,res) => {
     });
 })
 
-app.delete('/data2', (req,res) => {
+/* app.delete('/data2', (req,res) => {
   let title1 = req.body.title;
    db.collection('todolist').deleteOne({title:title1}, (err,result) => {
     
@@ -73,7 +74,15 @@ app.delete('/data2', (req,res) => {
     }
     
    })
- })
+ }) */
+
+ app.delete("/delete/:id", (req, res) => {
+  db.collection("todolist").deleteOne({ _id: ObjectId(req.params.id) },(err, result) => {
+      console.log(typeof req.params.id)
+      res.send("delete success");
+    }
+  );
+});
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '/react/build/index.html'));
