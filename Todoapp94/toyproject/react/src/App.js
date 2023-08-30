@@ -32,10 +32,7 @@ function App() {
       <Route path="/detail/:id" element={<Detail data1={data1}></Detail>}></Route>
     </Routes>
 
-    {
-      console.log(data1)
-    }
-  
+    
   
      
     </div>

@@ -40,7 +40,13 @@ app.post('/info', (req,res) => {
 
 app.post('/data2', (req,res) => {
   console.log(req.body)
-  db.collection('todolist').insertOne( {title : req.body.title, content:req.body.content, date:req.body.date }, (err, result) => {
+  db.collection('todolist').insertOne( {
+    title : req.body.title, 
+    content:req.body.content, 
+    date:req.body.date,
+    complete:false
+
+  }, (err, result) => {
     /* console.log('success99')  */
     res.send("success")
   })
@@ -59,26 +65,24 @@ app.get('/data2', (req,res) => {
     });
 })
 
-/* app.delete('/data2', (req,res) => {
-  let title1 = req.body.title;
-   db.collection('todolist').deleteOne({title:title1}, (err,result) => {
+app.post("/modify/:id", (req, res) => {
+  db.collection("todolist").updateOne(
+    { _id: ObjectId(req.params.id) },
+    {
+      $set: {
+        complete:true
+      }
+    },
     
-    if(err) console.log(err);
-    console.log(result)   
-
-    if(result.deletedCount == 0) {
-      res.status(500).send('FAil')
+    (err, result) => {
+      res.send("modify success");
     }
-    else {
-      res.send('delete success');
-    }
-    
-   })
- }) */
+  );
+});
 
  app.delete("/delete/:id", (req, res) => {
   db.collection("todolist").deleteOne({ _id: ObjectId(req.params.id) },(err, result) => {
-      console.log(typeof req.params.id)
+      //console.log(typeof req.params.id)
       res.send("delete success");
     }
   );
