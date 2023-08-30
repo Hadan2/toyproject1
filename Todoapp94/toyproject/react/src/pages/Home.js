@@ -3,6 +3,8 @@ import {Button, Container, Nav, Navbar,Row,Col} from 'react-bootstrap'
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import MyNavbar from "./navbar";
+
 function Home(props) {
     const navigate = useNavigate();
     const params = useParams();
@@ -22,35 +24,8 @@ function Home(props) {
 
     return (
         <div>
-            <Navbar>
 
-                <Container>
-                    <Row>
-                        <Col>
-                            <Button variant="contained" color="primary" className="textst"
-                                onClick={() => {
-                                    navigate('/home')
-                                }}>
-                                Todolist
-                            </Button>
-                        </Col>
-                        <Col xs="auto">
-                            <Button variant="contained" color="primary" className="textst"
-                                onClick={() => {
-                                    navigate('/add')
-                                }}>
-                                Add
-                            </Button>
-                        </Col>
-                    </Row>
-                </Container>
-
-                
-                
-                
-                
-
-            </Navbar>
+            <MyNavbar></MyNavbar> 
 
             {
                 props.data1.map((a,i) => {
@@ -62,7 +37,7 @@ function Home(props) {
                                     navigate('/')
                                 }}>{a.date}</div>
                                 
-                                <Link to={`/${a.title}`} className="bottom-left textst">{a.title}</Link>
+                                <Link to={`/detail/${a.title}`} className="bottom-left textst">{a.title}</Link>
 
                                 <Button className="bottom-right-delete" variant="danger" 
                                 onClick={(e) => {

@@ -8,12 +8,12 @@ import axios from 'axios';
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Add from './pages/Add'
-
+import MyNavbar from './pages/navbar';
+import Detail from './pages/detail';
 
 
 function App() {
   const navigate = useNavigate();
-  let params = useParams();
   const [data1, setData1] = useState([]);
 
     
@@ -21,13 +21,15 @@ function App() {
        
 
   return (
+
     <div className='App'>
    
+
     <Routes>
       <Route path="/home" element={<Home data1={data1} setData1={setData1}></Home>} />
       <Route path="/" element={<Login></Login>} />
       <Route path="/add" element={<Add></Add>} />
-      <Route path="/params.title" element={<Home></Home>}></Route>
+      <Route path="/detail/:id" element={<Detail data1={data1}></Detail>}></Route>
     </Routes>
 
     {
