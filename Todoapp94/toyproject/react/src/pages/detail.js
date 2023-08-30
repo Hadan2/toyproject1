@@ -5,8 +5,8 @@ import axios from 'axios';
 import MyNavbar from "./navbar";
 
 function Detail(props) {
-    const {title} = useParams();
-    
+    const {id} = useParams();
+    const nowData = props.data1.find(item => item._id.toString() == id)
 
     return (
             <div>
@@ -16,10 +16,10 @@ function Detail(props) {
             <Container>
                 <div className="sqaure">
 
-                    <div className="textst" style={{ marginTop: 20 }}> {title} </div>
+                    <div className="textst" style={{ marginTop: 20 }}> {nowData.title} </div>
                         
 
-                    <div className="textst" style={{ marginTop: 20 }}></div>
+                    <div className="textst" style={{ marginTop: 20 }}>{nowData.content}</div>
                         
 
                      

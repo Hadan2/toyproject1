@@ -29,7 +29,7 @@ function Home(props) {
 
             {
                 props.data1.map((a,i) => {
-                    
+                    let x = a._id.toString()
                     return (
                         <Container key={a._id}>
                             <div className="small-square" >
@@ -37,7 +37,7 @@ function Home(props) {
                                     navigate('/')
                                 }}>{a.date}</div>
                                 
-                                <Link to={`/detail/${a.title}`} className="bottom-left textst">{a.title}</Link>
+                                <Link to={`/detail/${x}`} className="bottom-left textst">{a.title}</Link>
 
                                 <Button className="bottom-right-delete" variant="danger" 
                                 onClick={(e) => {
