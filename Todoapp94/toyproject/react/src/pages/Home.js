@@ -25,7 +25,7 @@ function Home(props) {
     return (
         <div>
             <MyNavbar ></MyNavbar> 
-            <div className="completed-box textst"> Completed Todo </div>
+            <div className="completed-box textst"> Completed Todo  </div>
 
             {
 
