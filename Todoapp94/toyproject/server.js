@@ -3,6 +3,14 @@ const app = express();
 const path = require('path');
 const { ObjectId } = require('mongodb');
 
+//login
+const dotenv = require('dotenv')
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+
 app.use(express.json());
 var cors = require('cors');
 app.use(cors());
@@ -16,6 +24,14 @@ app.use(express.urlencoded({extended:true}))
 app.set("view engine", "ejs");
 app.use('/static', express.static('static'));
 app.use('/public', express.static('public'))
+
+app.use(session({
+  secret: 'your-secret-key', // 세션을 암호화할 때 사용할 비밀 키
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 MongoClient.connect('mongodb+srv://Hadan2:fortis192@hadan2.gh0cdrh.mongodb.net/?retryWrites=true&w=majority',{ useUnifiedTopology: true } , function(err,client) {
     if(err) return console.log(err);
@@ -86,6 +102,37 @@ app.post("/modify/:id", (req, res) => {
       res.send("delete success");
     }
   );
+});
+
+//Login
+app.post('/loginServer', passport.authenticate('local', {failureRedirect: '/fail'}), (req,res) => {
+  console.log("zx")
+  res.send('success8');
+})
+
+passport.use(new LocalStrategy({
+  usernameField: 'id',
+  passwordField: 'pw',
+  session: true,
+  passReqToCallback: false,
+}, function (InputId, InputPw, done) {
+  // console.log(InputId, InputPw);
+  db.collection('info').findOne({id: InputId}, (err,result) => {
+    if(err) console.log(err);
+
+    if(!result) return done(null, false, {message: '존재하지 않는 아이디입니다'})
+    if(InputPw == result.pw) return done(null, result)
+    else return done(null, false, {message: '비번틀림'})
+  })
+}))
+passport.serializeUser(function (user, done) {
+  done(null, user.id)
+});
+
+passport.deserializeUser(function (id, done) {
+  db.collection('info').findOne({id: id}, (err,result) => {
+    done(null, result);
+  })
 });
 
 app.get('*', function (req, res) {

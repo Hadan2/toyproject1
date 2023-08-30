@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
-    let [modal, setModal] = useState(false);
+    let [modalRegister, setModalRegister] = useState(false);
+    let [modalLogin, setModalLogin] = useState(false);
     let [id, setId] = useState("");
     let [pwd, setPwd] = useState("");
 
@@ -18,15 +19,24 @@ function Login() {
 
             <div style={{textAlign : "center"}}>
             <button className="login-button" onClick={ () => {
-                
+              setModalRegister(false);
+              setModalLogin(!modalLogin);
+              
             }}>로그인</button>
             
             <button className="signup-button" onClick={ () => {
-                setModal(!modal);
+                setModalLogin(false);
+                setModalRegister(!modalRegister);
+              
+ 
             }}>회원가입</button>
 
             {
-                modal === true ? <Modal id = {id} setId = {setId} setPwd = {setPwd} pwd = {pwd} />: null
+                modalRegister === true ? <ModalRegister id = {id} setId = {setId} setPwd = {setPwd} pwd = {pwd} />: null
+                
+            }
+            {
+                modalLogin === true ? <ModalLogin id = {id} setId = {setId} setPwd = {setPwd} pwd = {pwd} />: null
             }
             </div>
             
@@ -37,7 +47,7 @@ function Login() {
     )
 }
 
-function Modal(props){
+function ModalRegister(props){
 
   const navigate = useNavigate();
 
@@ -97,5 +107,64 @@ function Modal(props){
        
     )
   }
+
+  function ModalLogin(props){
+
+    const navigate = useNavigate();
+  
+      return (
+          <div>
+              
+  
+              <div>
+              <input onChange={(e) => {
+                props.setId(e.target.value);
+              }}
+              
+              placeholder="아이디"
+              type="text"
+            />
+  
+              </div>
+  
+              <div>
+              <input onChange={(e) => {
+                props.setPwd(e.target.value);
+              }}
+              
+              placeholder="비밀번호"
+              type="password"
+              />
+              </div>
+            
+  
+            <button onClick={() => {
+              console.log(props.id)
+              console.log(props.pwd)
+              axios.post('http://localhost:8080/loginServer', {
+                  id : props.id,
+                  pw : props.pwd
+              })
+              .then(response => {
+                  console.log('요청이 성공했습니다.')
+                  navigate('/')
+  
+                })
+                .catch(error => {
+                  /* console.error('요청이 실패했습니다.'); */
+                });
+            }}> 로그인 </button>
+  
+  
+          
+  
+              
+          </div>
+  
+          
+  
+         
+      )
+    }
 
 export default Login;

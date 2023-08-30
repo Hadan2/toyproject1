@@ -52,8 +52,7 @@ toLocalstring(ko-kr)
 콘솔에 한글 시간 찍기
 
 8/29 할거
-detail 버튼 대신에 날짜나 제목 눌렀을때 detail 보여주도록
-url parameter 이용해서 데이터 보내기
-navbar 감싸기 
+
+
 complete 속성 추가하기
 delete 경고 추가하기
