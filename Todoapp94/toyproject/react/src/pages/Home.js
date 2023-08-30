@@ -28,6 +28,7 @@ function Home(props) {
             <MyNavbar></MyNavbar> 
 
             {
+
                 props.data1.map((a,i) => {
                     let x = a._id.toString()
                     return (
@@ -36,21 +37,21 @@ function Home(props) {
                                 <div className="top-left textst" onClick={() => {
                                     navigate('/')
                                 }}>{a.date}</div>
+
                                 
                                 <Link to={`/detail/${x}`} className="bottom-left textst">{a.title}</Link>
+
 
                                 <Button className="bottom-right-delete" variant="danger" 
                                 onClick={(e) => {
                                     console.log(a.title)
                                     axios.delete(`http://localhost:8080/delete/${a._id}`,{
-                                        data : {
-                                            title : a.title
-                                        }
-                                    })
+                                        })
                                         .then(response => {
+                                            let copy2 = [...props.data1]
+                                            copy2.splice(i,1)
+                                            props.setData1(copy2)
                                             console.log(response);
-                                            window.location.reload()
-                                            
                                         })
                                         .catch(error => {
                                             
