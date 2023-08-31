@@ -2,8 +2,8 @@
 1. todo 조회 (완료)
 2. todo 추가 (완료)
 3. todo 삭제 (완료)
-4. todo 완료 (미완료)
-5. 로그인/회원가입 (로그인 미완료)
+4. todo 완료 (완료)
+5. 로그인/회원가입 (로그인 완료)
 6. 예외처리 (미완료)
 7. 관리자 역할 부여 (미완료)
 8. 작성자가 로그인한 아이디인 글 목록 조회 (미완료)
@@ -34,9 +34,10 @@ d. 코드 짜기
 c. api
 1. /login : 로그인/회원가입 페이지
 2. /home: todolist 메인 페이지
-3. /home/? : 각 todo 항목의 content
+3. /detail/? : 각 todo 항목의 content
 4. /add : todolist 추가
-5. /mypage
+5. /delete/:id
+6. /loginServer
 
 
 404페이지(미완료)
@@ -51,8 +52,11 @@ let a = new Date()
 toLocalstring(ko-kr)
 콘솔에 한글 시간 찍기
 
-8/29 할거
 
 
-complete 속성 추가하기
+
+로그인한 사람이 자기거만 delete
+mypage
+로그아웃
+css 수정
 delete 경고 추가하기

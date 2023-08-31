@@ -70,7 +70,7 @@ app.post('/data2', (req,res) => {
 })
 
 
-
+//
 app.get('/data2', (req,res) => {
   db.collection('todolist').find().toArray((err, result) => {
     if (err) {
@@ -106,23 +106,33 @@ app.post("/modify/:id", (req, res) => {
 
 //Login
 app.post('/loginServer', passport.authenticate('local', {failureRedirect: '/fail'}), (req,res) => {
-  console.log("zx")
-  res.send('success8');
+  res.status(200).json(req.user);
 })
 
 passport.use(new LocalStrategy({
   usernameField: 'id',
-  passwordField: 'pw',
+  passwordField: 'pwd',
   session: true,
   passReqToCallback: false,
 }, function (InputId, InputPw, done) {
   // console.log(InputId, InputPw);
   db.collection('info').findOne({id: InputId}, (err,result) => {
-    if(err) console.log(err);
+    if (err) {
+      console.log(err);
+      return done(err);
+    }
+    if (!result) {
+      console.log("id X")
+      return done(null, false, { message: '존재하지 않는 아이디입니다' });
+    }
+    if (InputPw === result.pwd) {
+      console.log('로그인 성공, 아이디:', InputId); // 성공 시 아이디 출력
+      return done(null, result);
+    } else {
+      console.log("pwd X")
+      return done(null, false, { message: '비번틀림' });
+    }
 
-    if(!result) return done(null, false, {message: '존재하지 않는 아이디입니다'})
-    if(InputPw == result.pw) return done(null, result)
-    else return done(null, false, {message: '비번틀림'})
   })
 }))
 passport.serializeUser(function (user, done) {
@@ -135,6 +145,7 @@ passport.deserializeUser(function (id, done) {
   })
 });
 
+//
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '/react/build/index.html'));
 });
