@@ -21,80 +21,121 @@ function Home(props) {
           });
       }, []);
 
+      const handleComplete = (id) => {
+        axios
+          .post(`http://localhost:8080/modify/${id}`, {})
+          .then((response) => {
+            // 데이터를 업데이트하고 다시 렌더링
+            const updatedData = props.data1.map((item) => {
+              if (item._id === id) {
+                return { ...item, complete: true };
+              }
+              return item;
+            });
+            props.setData1(updatedData);
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+
+      const handleDelete = (id,i) => {
+        axios.delete(`http://localhost:8080/delete/${id}`,{
+        })
+            .then(response => {
+            let copy2 = [...props.data1]
+            copy2.splice(i,1)
+            props.setData1(copy2)
+            console.log(response);
+            })
+            .catch(error => {              
+            console.error(error);
+            })
+      };
+
+
 
     return (
+        
         <div>
-            <MyNavbar ></MyNavbar> 
-            <div className="completed-box textst"> Completed Todo  </div>
+            <MyNavbar></MyNavbar>
+            
+            <div className="large-square">
 
+
+            <div className="large-square1">
             {
-
-                props.data1.map((a,i) => {
+                props.data1.map( (a,i) => {
                     let x = a._id.toString()
+
                     if(a.complete == false) {
                     return (
-                        <Container style={{ display: 'flex' }}  key={a._id}>
+                                <div className="small-square textst" >
 
-                                <div className="small-square" >
-                                <div className="top-left textst" onClick={() => {
-                                    navigate('/')
+                                <div className=" textst" onClick={() => {
                                 }}>{a.date}</div>
 
-                                
-                                <Link to={`/detail/${x}`} className="bottom-left textst">{a.title}</Link>
+                                <Link to={`/detail/${x}`} className="textst">{a.title}</Link>
+
+                                <div className="button-container">
 
                                 <Button className="bottom-right-completed" onClick={() => {
-
-                                    axios.post(`http://localhost:8080/modify/${a._id}`, {
-                                    })
-                                    .then(response => {
-                                        let copy2 = [...props.data1]
-                                        props.setData1(copy2)
-                                        console.log(response);
-                                    })
-                                    .catch(error => {
-                                        console.log(error);
-                                    });
+                                    handleComplete(a._id)
                                 }}> Complete! </Button>
-
 
                                 <Button className="bottom-right-delete" variant="danger" 
                                 onClick={(e) => {
-                                    console.log(a.title)
-                                    axios.delete(`http://localhost:8080/delete/${a._id}`,{
-                                        })
-                                        .then(response => {
-                                            let copy2 = [...props.data1]
-                                            copy2.splice(i,1)
-                                            props.setData1(copy2)
-                                            console.log(response);
-                                        })
-                                        .catch(error => {
-                                            
-                                            console.error(error);
-                                        })
-                                    
+                                    handleDelete(a._id,i)
+                                }}
+                                > Delete </Button> 
+                                
+                                </div>
+
+                                </div>
+                         
+                    )}})
+            }
+            </div>    
+                
+            <div className="large-square2 textst">
+            <div> Completed Todolist</div>
+            {
+               props.data1.map((a,i) => {
+
+                        if(a.complete==true) {
+                            return (
+                            
+                                <div className="small-square2 textst" >  {a.date}   {a.title} 
+
+                                <div className="button-container">
+
+                                <Button className="bottom-right-delete" variant="danger" 
+                                style={{ display: 'inline', marginLeft: 300, marginTop:-5}} 
+                                onClick={(e) => {
+                                    handleDelete(a._id,i)
                                 }}
                                 > Delete </Button>
-                            </div>
-                         </Container>
-                    )}
 
-                    else {
-                        return (
-                            <Container style={{ display: 'flex'}}  key={a._id}>
-                                <div className="small-square2 textst" >  {a.date}   {a.title} </div>
+                                </div>
+                                
+                                </div>
 
-                            </Container>
-                        )
-                    }
-                })
+                            
+                                )
+                            }
+                        })
+                    
+            }
+            </div>
+                    
 
                 
-            }
 
             
 
+           </div> 
+            
             
            
         </div>

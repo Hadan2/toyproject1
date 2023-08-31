@@ -15,19 +15,20 @@ import Detail from './pages/detail';
 function App() {
   const navigate = useNavigate();
   const [data1, setData1] = useState([]);
+  const [user, setUser] = useState('');
 
-    
+ 
   
        
 
   return (
 
     <div className='App'>
-   
+    {console.log(user)}
 
     <Routes>
-      <Route path="/home" element={<Home data1={data1} setData1={setData1}></Home>} />
-      <Route path="/" element={<Login></Login>} />
+      <Route path="/home" element={<Home data1={data1} setData1={setData1} user={user} setUser={setUser} ></Home>} />
+      <Route path="/" element={<Login user={user} setUser={setUser} ></Login>} />
       <Route path="/add" element={<Add></Add>} />
       <Route path="/detail/:id" element={<Detail data1={data1}></Detail>}></Route>
     </Routes>

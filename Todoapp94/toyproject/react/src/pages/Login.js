@@ -4,7 +4,7 @@ import {Button, Container, Nav, Navbar} from 'react-bootstrap'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login(props) {
 
     let [modalRegister, setModalRegister] = useState(false);
     let [modalLogin, setModalLogin] = useState(false);
@@ -32,11 +32,22 @@ function Login() {
             }}>회원가입</button>
 
             {
-                modalRegister === true ? <ModalRegister id = {id} setId = {setId} setPwd = {setPwd} pwd = {pwd} />: null
+                modalRegister === true ? <ModalRegister 
+                id = {id} 
+                setId = {setId} 
+                setPwd = {setPwd} 
+                pwd = {pwd} />: null
                 
             }
             {
-                modalLogin === true ? <ModalLogin id = {id} setId = {setId} setPwd = {setPwd} pwd = {pwd} />: null
+                modalLogin === true ? <ModalLogin 
+                id = {id} 
+                setId = {setId} 
+                setPwd = {setPwd} 
+                pwd = {pwd} 
+                setUser={props.setUser}
+                
+                 />: null
             }
             </div>
             
@@ -46,7 +57,6 @@ function Login() {
         </div>
     )
 }
-
 function ModalRegister(props){
 
   const navigate = useNavigate();
@@ -143,16 +153,18 @@ function ModalRegister(props){
               console.log(props.pwd)
               axios.post('http://localhost:8080/loginServer', {
                   id : props.id,
-                  pw : props.pwd
+                  pwd : props.pwd
               })
-              .then(response => {
-                  console.log('요청이 성공했습니다.')
-                  navigate('/')
-  
-                })
-                .catch(error => {
-                  /* console.error('요청이 실패했습니다.'); */
-                });
+              .then((response)=>{
+                if(response.data.id===props.id){
+                    alert('Logined')
+                    props.setUser(response.data.id)
+                    navigate('/home')
+                }
+                else{
+                    alert('fail')
+                }
+            })
             }}> 로그인 </button>
   
   
@@ -166,5 +178,7 @@ function ModalRegister(props){
          
       )
     }
+
+
 
 export default Login;
