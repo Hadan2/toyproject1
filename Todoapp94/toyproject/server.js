@@ -130,8 +130,8 @@ app.get('/data2', (req,res) => {
 })
 
 app.post("/modify/:id", (req, res) => {
-  db.collection("todolist").updateOne(
-    { _id: ObjectId(req.params.id) },
+  console.log('서버까진 왔네요')
+  db.collection("todolist").updateOne({ _id: ObjectId(req.params.id)/* , writer: req.body.user */ },
     {
       $set: {
         complete:true
@@ -139,16 +139,33 @@ app.post("/modify/:id", (req, res) => {
     },
     
     (err, result) => {
-      res.send("modify success");
+      
+      if(err) {
+        console.log('ㅋㅋ')
+      }
+      else{
+        console.log('성공인가?')
+      }
     }
   );
 });
 
  app.delete("/delete/:id", (req, res) => {
-  db.collection("todolist").deleteOne({ _id: ObjectId(req.params.id) },(err, result) => {
-      //console.log(typeof req.params.id)
-      res.send("delete success");
+  db.collection("todolist").deleteOne({ _id: ObjectId(req.params.id), writer: req.body.user },(err, result) => {
+    if(err) {
+      console.log(err);
+    
     }
+
+    if(result.deletedCount == 0) {
+      res.status(500).send('FAil')
+      console.log('it is not your post')
+    }
+    else {
+      res.send('delete success');
+    }
+    }
+
   );
 });
 

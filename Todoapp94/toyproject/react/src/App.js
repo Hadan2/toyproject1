@@ -17,13 +17,13 @@ function App() {
   const [data1, setData1] = useState([]);
   const [user, setUser] = useState('');
 
-  useEffect(() => {
+/*   useEffect(() => {
     
     if (!user) {
       alert('you not logined')
-      navigate('/login'); // 로그인 페이지로 리다이렉션
+      navigate('/'); // 로그인 페이지로 리다이렉션
     }
-  }, [user, navigate]);
+  }, [user, navigate]); */
   
        
 

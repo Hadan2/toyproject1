@@ -22,9 +22,13 @@ function Home(props) {
       }, []);
 
       const handleComplete = (id) => {
+        console.log('버튼 눌렀네요')
         axios
-          .post(`http://localhost:8080/modify/${id}`, {})
+          .post(`http://localhost:8080/modify/${id}`, {
+            user: props.user
+          })
           .then((response) => {
+            console.log('뭐하냐?')
             // 데이터를 업데이트하고 다시 렌더링
             const updatedData = props.data1.map((item) => {
               if (item._id === id) {
@@ -34,14 +38,21 @@ function Home(props) {
             });
             props.setData1(updatedData);
             console.log(response);
+            
+            
           })
           .catch((error) => {
+            console.log('에휴')
+            alert('이건 니 포스트가 아님')
             console.log(error);
           });
       };
 
       const handleDelete = (id,i) => {
         axios.delete(`http://localhost:8080/delete/${id}`,{
+            data: {
+                user:props.user
+              }
         })
             .then(response => {
             let copy2 = [...props.data1]
@@ -49,7 +60,8 @@ function Home(props) {
             props.setData1(copy2)
             console.log(response);
             })
-            .catch(error => {              
+            .catch(error => {  
+            alert("이건 니 포스트가 아니다")            
             console.error(error);
             })
       };
