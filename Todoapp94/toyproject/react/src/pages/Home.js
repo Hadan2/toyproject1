@@ -86,7 +86,10 @@ function Home(props) {
 
                                 <Button className="bottom-right-delete" variant="danger" 
                                 onClick={(e) => {
-                                    handleDelete(a._id,i)
+                                    if(window.confirm('정말 삭제하시겠습니까?')) {
+                                        handleDelete(a._id,i)
+                                    }
+                                    
                                 }}
                                 > Delete </Button> 
                                 
@@ -113,7 +116,9 @@ function Home(props) {
                                 <Button className="bottom-right-delete" variant="danger" 
                                 style={{ display: 'inline', marginLeft: 300, marginTop:-5}} 
                                 onClick={(e) => {
-                                    handleDelete(a._id,i)
+                                    if(window.confirm('정말 삭제하시겠습니까?')) {
+                                        handleDelete(a._id,i)
+                                    }
                                 }}
                                 > Delete </Button>
 

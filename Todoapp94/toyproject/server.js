@@ -105,7 +105,7 @@ app.post("/modify/:id", (req, res) => {
 });
 
 //Login
-app.post('/loginServer', passport.authenticate('local', {failureRedirect: '/fail'}), (req,res) => {
+app.post('/loginServer', passport.authenticate('local', {failureRedirect: '/loginserver'}), (req,res) => {
   res.status(200).json(req.user);
 })
 
