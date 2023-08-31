@@ -159,6 +159,7 @@ function ModalRegister(props){
                 if(response.data.id===props.id){
                     alert('Logined')
                     props.setUser(response.data.id)
+                    sessionStorage.setItem('info',props.id)
                     navigate('/home')
                 }
                 else{

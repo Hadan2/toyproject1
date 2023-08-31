@@ -31,6 +31,7 @@ function MyNavbar() {
                                     axios.get('http://localhost:8080/logout')
                                     .then(res => {
                                         alert('Logout!')
+                                        sessionStorage.clear();
                                         navigate('/')
                                       })
                                       .catch(err => {

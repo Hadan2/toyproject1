@@ -44,8 +44,10 @@ MongoClient.connect('mongodb+srv://Hadan2:fortis192@hadan2.gh0cdrh.mongodb.net/?
         
 })
 
+
 //Login
 app.post('/loginServer', passport.authenticate('local', {failureRedirect: '/loginserver'}), (req,res) => {
+  console.log(req.user);
   res.status(200).json(req.user);
 })
 
