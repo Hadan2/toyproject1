@@ -26,7 +26,7 @@ app.use('/static', express.static('static'));
 app.use('/public', express.static('public'))
 
 app.use(session({
-  secret: 'your-secret-key', // 세션을 암호화할 때 사용할 비밀 키
+  secret: '@hadan2', // 세션을 암호화할 때 사용할 비밀 키
   resave: false,
   saveUninitialized: false
 }));
@@ -43,66 +43,6 @@ MongoClient.connect('mongodb+srv://Hadan2:fortis192@hadan2.gh0cdrh.mongodb.net/?
     })
         
 })
-
-
-app.post('/info', (req,res) => {
-  console.log(req.body)
-  db.collection('info').insertOne( {id: req.body.id, pwd: req.body.pwd} , (err, result) => {
-    /* console.log('success99')  */
-    res.send("success")
-  })
-  
-})
-
-app.post('/data2', (req,res) => {
-  console.log(req.body)
-  db.collection('todolist').insertOne( {
-    title : req.body.title, 
-    content:req.body.content, 
-    date:req.body.date,
-    complete:false
-
-  }, (err, result) => {
-    /* console.log('success99')  */
-    res.send("success")
-  })
-  
-})
-
-
-//
-app.get('/data2', (req,res) => {
-  db.collection('todolist').find().toArray((err, result) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.json(result); 
-    }
-    });
-})
-
-app.post("/modify/:id", (req, res) => {
-  db.collection("todolist").updateOne(
-    { _id: ObjectId(req.params.id) },
-    {
-      $set: {
-        complete:true
-      }
-    },
-    
-    (err, result) => {
-      res.send("modify success");
-    }
-  );
-});
-
- app.delete("/delete/:id", (req, res) => {
-  db.collection("todolist").deleteOne({ _id: ObjectId(req.params.id) },(err, result) => {
-      //console.log(typeof req.params.id)
-      res.send("delete success");
-    }
-  );
-});
 
 //Login
 app.post('/loginServer', passport.authenticate('local', {failureRedirect: '/loginserver'}), (req,res) => {
@@ -145,9 +85,93 @@ passport.deserializeUser(function (id, done) {
   })
 });
 
+function Logined(req,res,next) {
+  if(req.user) {
+    next()
+  } else {
+    res.redirect('/')
+  }
+}
+
+app.post('/info', (req,res) => {
+  console.log(req.body)
+  db.collection('info').insertOne( {id: req.body.id, pwd: req.body.pwd} , (err, result) => {
+    /* console.log('success99')  */
+    res.send("success")
+  })
+  
+})
+
+app.post('/data2', (req,res) => {
+  console.log(req.body)
+  db.collection('todolist').insertOne( {
+    title : req.body.title, 
+    content:req.body.content, 
+    date: req.body.date,
+    complete: false,
+    writer: req.body.writer
+  }, (err, result) => {
+
+    res.send("success")
+  })
+  
+})
+
+
 //
-app.get('*', function (req, res) {
+app.get('/data2', (req,res) => {
+  db.collection('todolist').find().toArray((err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.json(result); 
+    }
+    });
+})
+
+app.post("/modify/:id", (req, res) => {
+  db.collection("todolist").updateOne(
+    { _id: ObjectId(req.params.id) },
+    {
+      $set: {
+        complete:true
+      }
+    },
+    
+    (err, result) => {
+      res.send("modify success");
+    }
+  );
+});
+
+ app.delete("/delete/:id", (req, res) => {
+  db.collection("todolist").deleteOne({ _id: ObjectId(req.params.id) },(err, result) => {
+      //console.log(typeof req.params.id)
+      res.send("delete success");
+    }
+  );
+});
+
+
+
+//Logout
+app.get('/logout', (req, res, next) => {
+  req.logOut(err => {
+    if (err) {
+      return next(err);
+    } else {
+      console.log('logout')
+      res.redirect('/')
+    }
+  });
+});
+
+app.get('/home', Logined, function (req, res) {
   res.sendFile(path.join(__dirname, '/react/build/index.html'));
 });
+
+/* app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/react/build/index.html'));
+}); */
 
   

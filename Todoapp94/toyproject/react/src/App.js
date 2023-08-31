@@ -17,7 +17,13 @@ function App() {
   const [data1, setData1] = useState([]);
   const [user, setUser] = useState('');
 
- 
+  useEffect(() => {
+    
+    if (!user) {
+      alert('you not logined')
+      navigate('/login'); // 로그인 페이지로 리다이렉션
+    }
+  }, [user, navigate]);
   
        
 
@@ -29,7 +35,7 @@ function App() {
     <Routes>
       <Route path="/home" element={<Home data1={data1} setData1={setData1} user={user} setUser={setUser} ></Home>} />
       <Route path="/" element={<Login user={user} setUser={setUser} ></Login>} />
-      <Route path="/add" element={<Add></Add>} />
+      <Route path="/add" element={<Add user={user}></Add>} />
       <Route path="/detail/:id" element={<Detail data1={data1}></Detail>}></Route>
     </Routes>
 

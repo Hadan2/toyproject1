@@ -71,7 +71,7 @@ function Home(props) {
 
                     if(a.complete == false) {
                     return (
-                                <div className="small-square textst" >
+                                <div className="small-square textst" key={a._id}>
 
                                 <div className=" textst" onClick={() => {
                                 }}>{a.date}</div>
@@ -102,14 +102,14 @@ function Home(props) {
             </div>    
                 
             <div className="large-square2 textst">
-            <div> Completed Todolist</div>
+            <div> {props.user}'s Completed Todolist</div>
             {
                props.data1.map((a,i) => {
 
                         if(a.complete==true) {
                             return (
                             
-                                <div className="small-square2 textst" >  {a.date}   {a.title} 
+                                <div className="small-square2 textst" key={a.id} >  {a.date}   {a.title} 
 
                                 <div className="button-container">
 

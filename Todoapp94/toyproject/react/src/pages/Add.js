@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import MyNavbar from "./navbar";
 
-function Add() {
+function Add(props) {
     const navigate = useNavigate();
 
     let [title, setTitle] = useState("");
@@ -53,7 +53,9 @@ function Add() {
                             axios.post('http://localhost:8080/data2', {
                                 title : title,
                                 content : content,
-                                date : date
+                                date : date,
+                                writer: props.user
+                                
                             })
                             .then(response => {
                                 navigate('/home')
