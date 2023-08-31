@@ -8,9 +8,9 @@ import MyNavbar from "./navbar";
 function Home(props) {
     const navigate = useNavigate();
     const params = useParams();
-    
-    useEffect(() => {
-        axios.get('http://localhost:8080/data2') 
+
+    const fetchData = () => {
+      axios.get('http://localhost:8080/data2') 
           .then(res => {
             let copy = [...res.data]
             props.setData1(copy);
@@ -19,27 +19,17 @@ function Home(props) {
           .catch(err => {
             console.error(err);
           });
-      }, []);
+    }
 
-      const handleComplete = (id) => {
+    const handleComplete = (id) => {
         console.log('버튼 눌렀네요')
-        axios
-          .post(`http://localhost:8080/modify/${id}`, {
+        axios.post(`http://localhost:8080/modify/${id}`, {
             user: props.user
           })
           .then((response) => {
+            fetchData();
+            console.log(response)
             console.log('뭐하냐?')
-            // 데이터를 업데이트하고 다시 렌더링
-            const updatedData = props.data1.map((item) => {
-              if (item._id === id) {
-                return { ...item, complete: true };
-              }
-              return item;
-            });
-            props.setData1(updatedData);
-            console.log(response);
-            
-            
           })
           .catch((error) => {
             console.log('에휴')
@@ -65,6 +55,13 @@ function Home(props) {
             console.error(error);
             })
       };
+
+
+    useEffect(() => {
+        fetchData();
+      }, []);
+
+      
 
 
 

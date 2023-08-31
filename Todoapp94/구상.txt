@@ -40,14 +40,6 @@ c. api
 6. /loginServer
 
 
-404페이지(미완료)
-콘솔 주석처리
-http://localhost:8080/data2/${title}/${..}
-새로고침 대신에 data1 state를 바꾸면 바로 렌더링
-삭제 팝업창
-get 요청 날리는 post 요청 날리는 api 따로 router 폴더로 구분하기
-fontawsome
-
 let a = new Date()
 toLocalstring(ko-kr)
 콘솔에 한글 시간 찍기
@@ -58,5 +50,3 @@ toLocalstring(ko-kr)
 로그인한 사람이 자기거만 delete
 mypage
 로그아웃
-css 수정
-delete 경고 추가하기

@@ -131,7 +131,7 @@ app.get('/data2', (req,res) => {
 
 app.post("/modify/:id", (req, res) => {
   console.log('서버까진 왔네요')
-  db.collection("todolist").updateOne({ _id: ObjectId(req.params.id)/* , writer: req.body.user */ },
+  db.collection("todolist").updateOne({ _id: ObjectId(req.params.id), writer: req.body.user },
     {
       $set: {
         complete:true
@@ -145,10 +145,12 @@ app.post("/modify/:id", (req, res) => {
       }
       else{
         console.log('성공인가?')
+        res.send('OHOHOHOH')
       }
     }
   );
 });
+
 
  app.delete("/delete/:id", (req, res) => {
   db.collection("todolist").deleteOne({ _id: ObjectId(req.params.id), writer: req.body.user },(err, result) => {
@@ -182,6 +184,8 @@ app.get('/logout', (req, res, next) => {
     }
   });
 });
+
+
 
 app.get('/home', Logined, function (req, res) {
   res.sendFile(path.join(__dirname, '/react/build/index.html'));
