@@ -2,8 +2,9 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const { ObjectId } = require('mongodb');
-import crypto from "crypto";
-import util from "util";
+/* import crypto from "crypto"; */
+/* import util from "util"; */
+const helmet = require('helmet')
 
 //login
 const dotenv = require('dotenv')
@@ -12,6 +13,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
+
+app.use(helmet())
 
 app.use(express.json());
 var cors = require('cors');
@@ -51,7 +54,7 @@ MongoClient.connect('mongodb+srv://Hadan2:fortis192@hadan2.gh0cdrh.mongodb.net/?
   return crypto.createHash("sha512").update(password).digest("base64");
 };
  */
-const randomBytesPromise = util.promisify(crypto.randomBytes);
+/* const randomBytesPromise = util.promisify(crypto.randomBytes);
 const pbkdf2Promise = util.promisify(crypto.pbkdf2);
 const createSalt = async () => {
   const buf = await randomBytesPromise(64);
@@ -73,7 +76,7 @@ export const verifyPassword = async (password, userSalt, userPassword) => {
 
   if (hashedPassword === userPassword) return true;
   return false;
-};
+}; */
 
 //Login
 app.post('/loginServer', passport.authenticate('local', {failureRedirect: '/loginserver'}), (req,res) => {
@@ -121,6 +124,7 @@ function Logined(req,res,next) {
   if(req.user) {
     next()
   } else {
+    res.send('not logined')
     res.redirect('/')
   }
 }
@@ -220,12 +224,18 @@ app.get('/logout', (req, res, next) => {
 
 
 
-app.get('/home', Logined, function (req, res) {
-  res.sendFile(path.join(__dirname, '/react/build/index.html'));
-});
 
-/* app.get('*', function (req, res) {
+
+app.get('/',(req,res) => {
+  res.sendFile(path.join(__dirname, '/react/build/index.html'))
+})
+
+/* app.get('/home', Logined, function (req, res) {
   res.sendFile(path.join(__dirname, '/react/build/index.html'));
 }); */
+
+app.get('*', Logined, function (req, res) {
+  res.sendFile(path.join(__dirname, '/react/build/index.html'));
+});
 
   
