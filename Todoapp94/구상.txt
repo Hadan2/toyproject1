@@ -46,7 +46,4 @@ toLocalstring(ko-kr)
 
 
 
-
-로그인한 사람이 자기거만 delete
-mypage
-로그아웃
+input 창에 이상한거 못넣도록- 정규식 사용
