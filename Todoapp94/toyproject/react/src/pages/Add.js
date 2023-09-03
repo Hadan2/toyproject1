@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import MyNavbar from "./navbar";
 
+import { isDate, isTitle } from "./Function";
+
 function Add(props) {
     const navigate = useNavigate();
 
@@ -49,8 +51,8 @@ function Add(props) {
 
                         <Button className="add-button" style={{marginTop:20, color: "Dark"}} 
                         onClick={() => {
-                            
-                            axios.post('http://localhost:8080/data2', {
+                            if(isDate(date)&&isTitle(title)) {
+                              axios.post('http://localhost:8080/data2', {
                                 title : title,
                                 content : content,
                                 date : date,
@@ -62,7 +64,12 @@ function Add(props) {
 
                             })
                             .catch(error => {
-                            });
+                            });  
+                            }
+                            else {
+                                alert('날짜와 타이틀을 올바르게 입력했는지 확인해주세요')
+                            }
+                            
                                     }}>
                             Add
                         </Button>

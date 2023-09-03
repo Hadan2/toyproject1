@@ -7,7 +7,8 @@ const { ObjectId } = require('mongodb');
 const helmet = require('helmet')
 
 //login
-const dotenv = require('dotenv')
+/* const dotenv = require('dotenv') */
+require("dotenv").config();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
@@ -31,14 +32,14 @@ app.use('/static', express.static('static'));
 app.use('/public', express.static('public'))
 
 app.use(session({
-  secret: '@hadan2', // 세션을 암호화할 때 사용할 비밀 키
+  secret: process.env.KEY, // 세션을 암호화할 때 사용할 비밀 키
   resave: false,
   saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-MongoClient.connect('mongodb+srv://Hadan2:fortis192@hadan2.gh0cdrh.mongodb.net/?retryWrites=true&w=majority',{ useUnifiedTopology: true } , function(err,client) {
+MongoClient.connect(process.env.DB_URL,{ useUnifiedTopology: true } , function(err,client) {
     if(err) return console.log(err);
 
     db = client.db('toyproject');
@@ -77,6 +78,8 @@ export const verifyPassword = async (password, userSalt, userPassword) => {
   if (hashedPassword === userPassword) return true;
   return false;
 }; */
+
+console.log(typeof process.env.DB_URL)
 
 //Login
 app.post('/loginServer', passport.authenticate('local', {failureRedirect: '/loginserver'}), (req,res) => {
@@ -217,7 +220,7 @@ app.get('/logout', (req, res, next) => {
       return next(err);
     } else {
       console.log('logout')
-      res.redirect('/')
+      res.send('logout success')
     }
   });
 });
@@ -226,16 +229,16 @@ app.get('/logout', (req, res, next) => {
 
 
 
-app.get('/',(req,res) => {
+/* app.get('/',(req,res) => {
   res.sendFile(path.join(__dirname, '/react/build/index.html'))
-})
+}) */
 
-/* app.get('/home', Logined, function (req, res) {
-  res.sendFile(path.join(__dirname, '/react/build/index.html'));
-}); */
-
-app.get('*', Logined, function (req, res) {
+app.get('/home', Logined, function (req, res) {
   res.sendFile(path.join(__dirname, '/react/build/index.html'));
 });
+
+/* app.get('*', Logined, function (req, res) {
+  res.sendFile(path.join(__dirname, '/react/build/index.html'));
+}); */
 
   

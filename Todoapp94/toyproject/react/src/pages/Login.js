@@ -4,12 +4,15 @@ import {Button, Container, Nav, Navbar} from 'react-bootstrap'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { isPassword, isId } from "./Function";
+
 function Login(props) {
 
     let [modalRegister, setModalRegister] = useState(false);
     let [modalLogin, setModalLogin] = useState(false);
     let [id, setId] = useState("");
     let [pwd, setPwd] = useState("");
+
 
     const navigate = useNavigate();
 
@@ -90,7 +93,8 @@ function ModalRegister(props){
           <button onClick={() => {
             //console.log(props.id)
             //console.log(props.pwd)
-            axios.post('http://localhost:8080/info', {
+            if(isId(props.id)&&isPassword(props.pwd)) {
+              axios.post('http://localhost:8080/info', {
                 id : props.id,
                 pwd : props.pwd
             })
@@ -104,6 +108,11 @@ function ModalRegister(props){
                 /* console.error('요청이 실패했습니다.');
                 console.error('오류:', error); */
               });
+            }
+            else {
+              alert('아이디 혹은 비밀번호를 올바르게 입력해주세요')
+            }
+            
           }}> 회원가입 </button>
 
 
